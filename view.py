@@ -58,6 +58,55 @@ def serviceDelete(service_id):
     else:
         return render_template('deleteService.html', service = service)
 
+@app.route('/services/<int:service_id>/items/')
+def showServiceItems(service_id):
+    service = session.query(Services).filter_by(id=service_id).one()
+    serviceItems = session.query(ServiceItem).all()
+    return render_template('showServiceItems.html', serviceItems = serviceItems, service = service)
+
+#Add new Service
+@app.route('/services/<int:service_id>/items/new', methods =['GET', 'POST'])
+def serviceItemAddNew(service_id):
+    service = session.query(Services).filter_by(id=service_id).one()
+    if request.method == 'POST':
+        if request.form['name']:
+            item = ServiceItem(name = request.form['name'])
+            session.add(item)
+            session.commit()
+            return redirect(url_for('showServiceItems', service_id = service_id))
+        else:
+            alert = 'alert("Fil all required field")'
+            return render_template('newServiceItem.html', alert= alert)
+    else:
+        return render_template('newServiceItem.html')
+
+
+#EDIT a Item
+@app.route('/services/<int:service_id>/items/<int:serviceItem_id>/edit', methods=['GET', 'POST'])
+def serviceItemEdit(service_id, serviceItem_id):
+    service = session.query(Services).filter_by(id=service_id).one()
+    serviceItem = session.query(ServiceItem).filter_by(id=serviceItem_id).one()
+    #POST request
+    if request.method == 'POST':
+        if request.form['name']:
+            serviceItem.name = request.form['name']
+            session.add(serviceItem)
+            session.commit()
+        return redirect(url_for('showServiceItems', service_id = service_id))
+    #GET request
+    else:
+        return render_template('editServiceItem.html', serviceItem = serviceItem)
+
+@app.route('/services/<int:service_id>/items/<int:serviceItem_id>/delete', methods =['GET', 'POST'])
+def serviceItemDelete(service_id, serviceItem_id):
+    service = session.query(Services).filter_by(id=service_id).one()
+    serviceItem = session.query(ServiceItem).filter_by(id=serviceItem_id).one()
+    if request.method == 'POST':
+        session.delete(serviceItem)
+        session.commit()
+        return redirect(url_for('showServiceItems', service_id = service_id))
+    else:
+        return render_template('deleteServiceItem.html', serviceItem = serviceItem, service = service)
 
 
 if __name__ == '__main__':
