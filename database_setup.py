@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy import Column, Integer, String, ForeignKey, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 
@@ -19,6 +19,9 @@ class ServiceItem(Base):
     id = Column(Integer, primary_key = True)
     name = Column(String(30), nullable = False)
     description = Column(String(250))
+    service_id = Column(Integer, ForeignKey('services.id'))
+    services = relationship(Services)
+
 
 class ServiceItemMenu(Base):
     __tablename__ = "service_item_menu"
@@ -28,5 +31,5 @@ class ServiceItemMenu(Base):
     description = Column(String(250))
 
 
-engine = create_engine("sqlite:///ItemCatlog.db")
+engine = create_engine("sqlite:///ItemCatalog.db")
 Base.metadata.create_all(engine)
