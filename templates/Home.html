@@ -2,17 +2,26 @@
 <html>
     <head>
         <link rel="stylesheet" href="\static\css\bootstrap.min.css">
+        <link rel="stylesheet" href="\static\css\style.css">
     </head>
     <body>
-        <h1>Services</h1>
-        <ul>
-            {% for service in services %}
+        <div class="login">
+            <span><a href="{{ url_for('login') }}"><button>SignIn</button></a></span>
+        </div>
+        <div class="container service">
+            <div class="head">
+                <h1><a href="{{ url_for('showService') }}">Services</a></h1>
+                <h3><a href="{{ url_for('serviceAddNew') }}">Add Service</a></h3>
+            </div>
+            <ul>
+                {% for service in services %}
                 <li>
                     <a href="{{ url_for('showServiceItems', service_id = service.id) }}">{{ service.id }} : {{ service.name }}</a>
                     <a href="{{url_for('serviceEdit', service_id = service.id)}}">Edit</a>
                     <a href="{{ url_for('serviceDelete', service_id = service.id) }}">Delete</a>
                 </li>
-            {% endfor %}
-        </ul>
+                {% endfor %}
+            </ul>
+        </div>
     </body>
 </html>
