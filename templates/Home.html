@@ -1,24 +1,18 @@
 <!doctype html>
 <html>
     <head>
-        <link rel="stylesheet" href="\static\css\bootstrap.min.css">
-        <link rel="stylesheet" href="\static\css\style.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
     </head>
     <body>
-        <div class="login">
-            <span><a href="{{ url_for('login') }}"><button>SignIn</button></a></span>
-        </div>
-        <div class="container service">
+        <div class="container">
             <div class="head">
-                <h1><a href="{{ url_for('showService') }}">Services</a></h1>
-                <h3><a href="{{ url_for('serviceAddNew') }}">Add Service</a></h3>
+                <h1><a href="{{ url_for('showGenre') }}">Categories</a></h1>
             </div>
             <ul>
-                {% for service in services %}
+                {% for g in genre %}
                 <li>
-                    <a href="{{ url_for('showServiceItems', service_id = service.id) }}">{{ service.id }} : {{ service.name }}</a>
-                    <a href="{{url_for('serviceEdit', service_id = service.id)}}">Edit</a>
-                    <a href="{{ url_for('serviceDelete', service_id = service.id) }}">Delete</a>
+                    <a href="{{ url_for('showItems', genre_id = g.id) }}">{{ g.name }}</a>
                 </li>
                 {% endfor %}
             </ul>
