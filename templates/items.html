@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
+    </head>
+    <body>
+        <header>
+            <div class="head">
+                <h1 id="logo">Anime Catalog</h1>
+            </div>
+        </header>
+        <div class="container">
+            <div class="flex-all">
+                <div class="Genre">
+                    <h2><a href="{{ url_for('showGenre') }}">Categories</a></h2>
+                    <ul>
+                        {% for ag in allGenre %}
+                        <li>
+                            <a href="{{ url_for('showItems', genre_id = ag.id) }}">{{ ag.name }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="Anime">
+                    <div class="anime-head">
+                        <div class="anime-name">
+                            <h2>{{ genre.name }}</h2>
+                        </div>
+                        <div class="add-item">
+                            <a href="{{ url_for('newItem', genre_id = genre.id) }}" class="btn btn-success">Add Item</a>
+                        </div>
+                    </div>
+                    <ul>
+                        {% for i in item %}
+                            <li>
+                                <div class="anime-list">
+                                    <div class="anime-name">
+                                        {{ i.name }}
+                                    </div>
+                                    <div class="edit-delete">
+                                        <a href="{{url_for('editItem', item_id = i.id, genre_id = genre.id)}}">Edit</a>
+                                        <a href="{{url_for('deleteItem', item_id = i.id, genre_id = genre.id)}}">Delete</a>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
