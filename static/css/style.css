@@ -1,0 +1,73 @@
+body{
+	padding: 0;
+	margin: 0;
+	background-color: #f1f1f1;
+}
+
+.head{
+	background: #193446;
+	color: rgb(243, 237, 237);
+	padding: 1% 0%;
+}
+
+#logo{
+	margin: 0%;
+	margin-left: 4%;
+}
+
+.container{
+	margin: 5% 5%;
+	padding: 0% 15%;
+}
+
+li{
+	list-style: none;
+}
+
+ul{
+	padding: 0%;
+}
+
+.flex-all{
+	display: flex;
+	border: 2px solid black;
+	border-radius: 10px;
+	background-color: #ffffff;
+}
+
+.Genre{
+	flex-basis: 40%;
+	border-right: 2px solid rgb(161, 158, 158);
+	
+	margin-left: 5%;
+}
+
+.anime-head{
+	display: flex;
+}
+
+.anime-name{
+	flex-basis: 64%;
+}
+
+.add-item{
+	flex-basis: 36%;
+	margin-top: 6%;
+}
+
+.Anime{
+	flex-basis: 60%;
+	margin: 0% 5%;
+}
+
+.anime-list{
+	display: flex;;
+}
+
+.anime-name{
+	flex-basis: 66.6%;
+}
+
+.edit-delete{
+	flex-basis: 33.3%;
+}
