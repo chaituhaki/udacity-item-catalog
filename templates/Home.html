@@ -1,21 +1,18 @@
-<!doctype html>
-<html>
-    <head>
-        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
-    </head>
-    <body>
-        <div class="container">
-            <div class="head">
-                <h1><a href="{{ url_for('showGenre') }}">Categories</a></h1>
+{% extends "Header.html" %}
+    {% block content %}
+            <div class="container">
+                <div class="flex-all">
+                    <div class="Genre">
+                        <h2><a href="{{ url_for('showGenre') }}">Categories</a></h2>
+                        <ul>
+                            {% for ag in allGenre %}
+                            <li class="genre-list">
+                                <a href="{{ url_for('showItems', genre_id = ag.id) }}">{{ ag.name }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <ul>
-                {% for g in genre %}
-                <li>
-                    <a href="{{ url_for('showItems', genre_id = g.id) }}">{{ g.name }}</a>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </body>
-</html>
+
+    {% endblock %}
