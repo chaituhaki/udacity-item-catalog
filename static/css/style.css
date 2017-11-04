@@ -7,12 +7,21 @@ body{
 .head{
 	background: #193446;
 	color: rgb(243, 237, 237);
-	padding: 1% 0%;
+	display: flex;
 }
 
-#logo{
+.logo-h1{
+	margin-left: 5%;
+}
+
+.logo{
+	flex-basis: 85%;
 	margin: 0%;
-	margin-left: 4%;
+}
+
+.login{
+	flex-basis: 15%;
+	margin-top: 2%;
 }
 
 .container{
@@ -31,16 +40,22 @@ ul{
 .flex-all{
 	display: flex;
 	border: 2px solid black;
-	border-radius: 10px;
+	border-radius: 5px;
 	background-color: #ffffff;
 }
 
 .Genre{
 	flex-basis: 40%;
 	border-right: 2px solid rgb(161, 158, 158);
-	
 	margin-left: 5%;
 }
+
+.Anime{
+	flex-basis: 60%;
+	margin: 0% 5%;
+}
+
+
 
 .anime-head{
 	display: flex;
@@ -55,13 +70,19 @@ ul{
 	margin-top: 6%;
 }
 
-.Anime{
-	flex-basis: 60%;
-	margin: 0% 5%;
+.list-group{
+	border: 1px solid #e1dcdb;
+	border-radius: 5px;
+	padding: 5px;
+	margin-bottom: 1%;
+}
+
+.list-group:hover{
+	background-color: #e1dcdb;
 }
 
 .anime-list{
-	display: flex;;
+	display: flex;
 }
 
 .anime-name{
@@ -70,4 +91,13 @@ ul{
 
 .edit-delete{
 	flex-basis: 33.3%;
+}
+
+button{
+	background-color: white;
+	color: black;
+}
+
+.removebutton{
+	display: none;
 }
