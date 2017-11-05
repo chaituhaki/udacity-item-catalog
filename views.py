@@ -1,13 +1,15 @@
+#import Dependencies
+#import flask
 from flask import Flask, url_for, render_template, jsonify, request, redirect
 from flask import session as login_session, flash
 from flask_httpauth import HTTPBasicAuth
-
+# import SqlAlchemy 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-
+# Import DB Modules
 from database_setup import Base, Genre, Item, User
-
+#import oauth2client
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 import httplib2
@@ -17,15 +19,15 @@ import requests
 import random
 import string
 
-
+# create engine connection
 engine = create_engine("sqlite:///AnimeCatalog.db")
-
+# bind the engine with base class
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 app = Flask(__name__)
 
-
+# Google Client ID.
 CLIENT_ID = json.loads(open('client_secrets.json', 'r')
                        .read())['web']['client_id']
 
@@ -75,7 +77,6 @@ def gconnect():
     if result['issued_to'] != CLIENT_ID:
         response = make_response(
             json.dumps("Token's client ID does not match app's."), 401)
-        print ("Token's client ID does not match app's.")
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -149,9 +150,8 @@ def create_state():
 @app.route('/gdisconnect')
 def gdisconnect():
     access_token = login_session['access_token']
-    print ('In gdisconnect access token is %s', access_token)
     print ('User name is: ')
-    print (login_session['username'])
+    print (login_session['username'] + 'revoked')
     if access_token is None:
         print ('Access Token is None')
         response = make_response(json.dumps('Current user not connected.'),
@@ -163,7 +163,6 @@ def gdisconnect():
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
     if result['status'] == '200':
-        print("deleting user session")
         del login_session['access_token']
         del login_session['gplus_id']
         del login_session['username']
@@ -264,9 +263,7 @@ def newItem(genre_id):
                 session.commit()
                 return redirect(url_for('showItems', genre_id=genre_id))
             else:
-                alert = 'alert("Fill all required field")'
-                return render_template('newItem.html',
-                                       alert=alert, genre=genre)
+                return render_template('newItem.html', genre=genre)
         # GET request
         else:
             return render_template('newItem.html', genre=genre)
