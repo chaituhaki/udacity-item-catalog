@@ -2,59 +2,64 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
         <link rel="stylesheet" href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
-        
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
-        </script>
-        <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
-        </script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>   
     </head>
     <body>
         <body>
             <header>
                 <div class="head">
                     <div class="logo">
-                        <h1 class="logo-h1">Anime Catalog</h1>
+                        <h1 class="logo-h1"><a href="{{url_for('showGenre')}}">Anime Catalog</a></h1>
                     </div>
                     <div class="login">
-                        <!-- GOOGLE PLUS SIGN IN BUTTON-->
-                        <button class="btn" id="signinButton">Sign in</button>
-                        <button class="btn" id="signoutButton">Sign Out</button>
+                            <button class="btn showSignIn" id="signinButton">Sign in </button>
+                            <button id="signoutButton" class="btn removebutton">Sign out</button>
                     </div>
                 </div>
             </header>
+            <div class="result"></div>
             {% block content %}
             
-            {% endblock %}
-
-        <script>
-            function start() {
-                gapi.load('auth2', function() {
-                  auth2 = gapi.auth2.init({
-                    client_id: '776324299031-fd6mnbkst7jhhfthergp50qijvlnjrv3.apps.googleusercontent.com',
-                    // Scopes to request in addition to 'profile' and 'email'
-                    //scope: 'additional_scope'
-                  });
+            {% endblock %}   
+            <script>
+                var name= '{{username}}';
+                var state = "{{STATE}}"
+                $( document ).ready(function(){
+                    if (name){
+                        console.log(name);
+                        $('.result').html("<h4>Hi "+name+"</h4>");
+                        $('#signinButton').toggleClass('removebutton');
+                        $('#signoutButton').toggleClass('removebutton');
+                    }
+                    else{
+                        $('.result').html('<h4>{{error}}</h4>');
+                    }
                 });
-              }
-              $('#signinButton').click(function() {
+                function start() {
+                    gapi.load('auth2', function() {
+                        auth2 = gapi.auth2.init({
+                        client_id: '{{ CLIENT_ID }}',
+                        // Scopes to request in addition to 'profile' and 'email'
+                        //scope: 'additional_scope'
+                        });
+                    });
+                }
+                $('#signinButton').click(function() {
                     // signInCallback defined in step 6.
                     auth2.grantOfflineAccess().then(signInCallback);
                 });
-
                 function signInCallback(authResult) {
                     if (authResult['code']) {
-
-                        // Hide the sign-in button now that the user is authorized, for example:
-                        $('#signinButton').attr('style', 'display: none');
-
+                        // remove sign in button
+                        $('#signinButton').toggleClass('removebutton');
+                        //show sign out button
+                        $('#signoutButton').toggleClass('removebutton');
                         // Send the code to the server
                         $.ajax({
                         type: 'POST',
-                        url: '/gconnect?state={{STATE}}',
+                        url: '/gconnect?state='+state,
                         // Always include an `X-Requested-With` header in every AJAX request,
                         // to protect against CSRF attacks.
                         headers: {
@@ -62,17 +67,37 @@
                         },
                         contentType: 'application/octet-stream; charset=utf-8',
                         success: function(result) {
+                            location.reload();
+                            name = result.name;
                             // Handle or verify the server response.
-
+                            console.log("Hi " + name);
+                            $('.result').html("<h4>Hi "+result.name+"</h4>");
                         },
                         processData: false,
                         data: authResult['code']
                         });
                     } 
                     else {
-                        // There was an error.
+                        console.log("Failed to make a server-side call. Check your configuration and console.");
                     }
                 }
+                $('#signoutButton').click(function(){
+                    $('#signinButton').toggleClass('removebutton');
+                    $('#signoutButton').toggleClass('removebutton');
+                    name;
+                    $('.result').html("");
+                    $.ajax({
+                        type: 'get',
+                        url: '/gdisconnect',
+                        success: function(result) {
+                            location.reload();
+                            // Handle or verify the server response.
+                            console.log("Signed out");
+                        }
+                    });
+                });
+            </script>
+            <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
             </script>
         </body>
     </body>

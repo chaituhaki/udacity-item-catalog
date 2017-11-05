@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
+    </head>
+    <body>
+        <div class="container">
+            <form method="POST">
+                <h2>Are you sure you want to delete {{ item.name }}</h2>
+                <button class="btn btn-primary button">Delete</button>
+            </form>
+        </div>
+        <script src = "{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+        <script src = "{{ url_for('static', filename='jquery.min.js') }}"></script>
+    </body>
+</html>
