@@ -1,103 +1,122 @@
-body{
+body {
 	padding: 0;
 	margin: 0;
 	background-color: #f1f1f1;
 }
 
-.head{
+.head {
 	background: #193446;
 	color: rgb(243, 237, 237);
 	display: flex;
 }
 
-.logo-h1{
+.logo-h1 {
 	margin-left: 5%;
 }
 
-.logo{
+.logo-h1 a {
+	text-decoration: none !important;
+	color: rgb(243, 237, 237);
+}
+
+.logo-h1 a:hover {
+	color: rgb(112, 166, 236);
+}
+
+.logo {
 	flex-basis: 85%;
 	margin: 0%;
 }
 
-.login{
+.login {
 	flex-basis: 15%;
 	margin-top: 2%;
 }
 
-.container{
+.container {
 	margin: 5% 5%;
 	padding: 0% 15%;
 }
 
-li{
+li {
 	list-style: none;
 }
 
-ul{
+ul {
 	padding: 0%;
 }
 
-.flex-all{
+.flex-all {
 	display: flex;
 	border: 2px solid black;
 	border-radius: 5px;
 	background-color: #ffffff;
 }
 
-.Genre{
+.Genre {
 	flex-basis: 40%;
 	border-right: 2px solid rgb(161, 158, 158);
 	margin-left: 5%;
 }
 
-.Anime{
+.Anime {
 	flex-basis: 60%;
 	margin: 0% 5%;
 }
 
-
-
-.anime-head{
+.anime-head {
 	display: flex;
 }
 
-.anime-name{
+.anime-name {
 	flex-basis: 64%;
 }
 
-.add-item{
+.add-item {
 	flex-basis: 36%;
 	margin-top: 6%;
 }
 
-.list-group{
+.list-group {
 	border: 1px solid #e1dcdb;
 	border-radius: 5px;
 	padding: 5px;
 	margin-bottom: 1%;
 }
 
-.list-group:hover{
+.list-group:hover {
 	background-color: #e1dcdb;
 }
 
-.anime-list{
+.anime-list {
 	display: flex;
 }
 
-.anime-name{
+.anime-name {
 	flex-basis: 66.6%;
 }
 
-.edit-delete{
+.edit-delete {
 	flex-basis: 33.3%;
 }
 
-button{
+button {
 	background-color: white;
 	color: black;
 }
 
-.removebutton{
+.removebutton {
 	display: none;
+}
+
+.result {
+	text-align: center;
+}
+
+.button {
+	margin-top: 2%;
+}
+
+.newItem {
+	margin-top: 2%;
 }
