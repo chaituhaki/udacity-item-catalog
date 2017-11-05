@@ -1,4 +1,4 @@
-# Project 3: Item Catalog
+# Project 5: Item Catalog
 ### by [chaitanya](https://github.com/chaituhaki) for Full Stack Web Developer Nanodegree
 
 ### Keypoints:
