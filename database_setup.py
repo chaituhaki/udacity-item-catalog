@@ -21,12 +21,6 @@ class User(Base):
     picture = Column(String(250))
     provider = Column(String(20))
 
-    def hash_password(self, password):
-        self.password_hash = custom_app_context.encrypt(password)
-
-    def verify_password(self, password):
-        return custom_app_context.verify(password, self.password_hash)
-
 
 class Genre(Base):
     """
